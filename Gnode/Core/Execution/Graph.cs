@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gnode.Core.Execution
 {
@@ -49,6 +47,26 @@ namespace Gnode.Core.Execution
         {
             return Connections.Remove(connection);
         }
-    }
 
+        // New methods
+        public INode FindNode(Guid id)
+        {
+            return Nodes.FirstOrDefault(node => node.ID == id);
+        }
+
+        public IConnection FindConnection(Guid id)
+        {
+            return Connections.FirstOrDefault(connection => connection.ID == id);
+        }
+
+        public bool NodeExists(Guid id)
+        {
+            return Nodes.Any(node => node.ID == id);
+        }
+
+        public bool ConnectionExists(Guid id)
+        {
+            return Connections.Any(connection => connection.ID == id);
+        }
+    }
 }
