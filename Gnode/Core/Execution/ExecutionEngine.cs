@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gnode.Core.Execution
 {
@@ -27,7 +25,12 @@ namespace Gnode.Core.Execution
 
             try
             {
-                foreach (var node in _graph.Nodes)
+                // Sort nodes based on their dependencies
+                var sortedNodes = _graph.Nodes
+                    .OrderByDescending(node => node.InputPorts.Count(port => port.Connections.Any()))
+                    .ToList();
+
+                foreach (var node in sortedNodes)
                 {
                     if (!_visitedNodes.Contains(node))
                     {
@@ -45,6 +48,7 @@ namespace Gnode.Core.Execution
                 Console.WriteLine($"Error during execution: {ex.Message}");
             }
         }
+
 
         protected virtual void ComputeExecutionOrder(INode node)
         {
