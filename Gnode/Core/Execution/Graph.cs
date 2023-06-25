@@ -49,22 +49,22 @@ namespace Gnode.Core.Execution
         }
 
         // New methods
-        public INode FindNode(Guid id)
+        public INode FindNode(String id)
         {
             return Nodes.FirstOrDefault(node => node.ID == id);
         }
 
-        public IConnection FindConnection(Guid id)
+        public IConnection FindConnection(String id)
         {
             return Connections.FirstOrDefault(connection => connection.ID == id);
         }
 
-        public bool NodeExists(Guid id)
+        public bool NodeExists(String id)
         {
             return Nodes.Any(node => node.ID == id);
         }
 
-        public bool ConnectionExists(Guid id)
+        public bool ConnectionExists(String id)
         {
             return Connections.Any(connection => connection.ID == id);
         }

@@ -12,11 +12,12 @@ namespace Gnode.Interfaces
         string ID { get; }
         Node ParentNode { get; }
         List<IConnection> Connections { get; }
+        Type DataType { get; }
+
         void Connect(IConnection connection);
         void Disconnect(IConnection connection);
         T GetData<T>();
     }
-
 
 
 }

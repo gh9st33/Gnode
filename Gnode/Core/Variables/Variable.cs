@@ -15,7 +15,7 @@ namespace Gnode.Core.Variables
         {
             Value = value;
         }
-
+        public Type DataType => typeof(T);
         public object GetValue() => Value;
 
         public void SetValue(object value)

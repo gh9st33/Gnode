@@ -10,6 +10,7 @@ namespace Gnode.Interfaces
     {
         string Name { get; }
         T Value { get; set; }
+        Type DataType { get; }
     }
 
 }

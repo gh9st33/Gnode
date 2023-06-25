@@ -73,7 +73,7 @@ namespace Gnode.Core.Execution
         private bool DataTypesMatch()
         {
             // The data types of connected ports should match
-            return _graph.Connections.All(connection => connection.SourcePort.Data.GetType() == connection.TargetPort.Data.GetType());
+            return _graph.Connections.All(connection => connection.SourcePort.GetType() == connection.TargetPort.GetType());
         }
     }
 }

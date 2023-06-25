@@ -10,6 +10,7 @@ namespace Gnode.Core.Execution
         public Node ParentNode { get; }
         public List<IConnection> Connections { get; }
         public Variable<T> Data;
+        public Type DataType => typeof(T);
 
         public Port(string id, Node parentNode)
         {

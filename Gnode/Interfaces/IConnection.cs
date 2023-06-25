@@ -8,7 +8,7 @@ namespace Gnode.Interfaces
 {
     public interface IConnection
     {
-        Guid ID { get; }
+        String ID { get; }
         IPort SourcePort { get; }
         IPort TargetPort { get; }
     }

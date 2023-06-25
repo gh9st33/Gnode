@@ -9,12 +9,12 @@ namespace Gnode.Interfaces
 {
     public interface INode
     {
-        Guid ID { get; }
+        string ID { get; }
         List<IPort> InputPorts { get; }
         List<IPort> OutputPorts { get; }
 
-        void AddInputPort<T>(Core.Execution.Port<T> port);
-        void AddOutputPort<T>(Core.Execution.Port<T> port);
+        void AddInputPort(IPort port);
+        void AddOutputPort(IPort port);
         void Execute();
     }
 
