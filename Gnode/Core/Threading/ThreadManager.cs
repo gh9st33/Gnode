@@ -1,14 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Gnode.Core.Threading
 {
     public class ThreadManager
     {
-        // Implementation depends on your threading model
-    }
+        private ThreadPool _threadPool;
 
+        public ThreadManager(int workerCount)
+        {
+            _threadPool = new ThreadPool(workerCount);
+        }
+
+        public void EnqueueTask(Action task)
+        {
+            _threadPool.EnqueueTask(task);
+        }
+
+        public void Dispose()
+        {
+            _threadPool.Dispose();
+        }
+    }
 }
