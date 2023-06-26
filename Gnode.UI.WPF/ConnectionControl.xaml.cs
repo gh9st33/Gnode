@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Gnode.UI.WPF
 {
@@ -13,7 +14,14 @@ namespace Gnode.UI.WPF
 
         public static readonly DependencyProperty IDProperty = DependencyProperty.Register(
             "ID", typeof(Guid), typeof(ConnectionControl), new PropertyMetadata(Guid.NewGuid()));
+        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register(
+    "Selected", typeof(bool), typeof(ConnectionControl), new PropertyMetadata(false));
 
+        public bool Selected
+        {
+            get { return (bool)GetValue(SelectedProperty); }
+            set { SetValue(SelectedProperty, value); }
+        }
         public Guid ID
         {
             get { return (Guid)GetValue(IDProperty); }
@@ -37,7 +45,17 @@ namespace Gnode.UI.WPF
             get { return (PortControl)GetValue(TargetPortProperty); }
             set { SetValue(TargetPortProperty, value); }
         }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            Selected = true;
+        }
 
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseRightButtonDown(e);
+            Selected = false;
+        }
         // Add more properties and methods for the ConnectionControl here
     }
 }
