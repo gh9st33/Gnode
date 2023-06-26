@@ -7,23 +7,17 @@ namespace Gnode.UI.WPF
 {
     public partial class NodeControl : UserControl
     {
-        public NodeControl()
-        {
-            InitializeComponent();
-            Ports = new ObservableCollection<PortControl>();
-        }
-
         public static readonly DependencyProperty IDProperty = DependencyProperty.Register(
             "ID", typeof(Guid), typeof(NodeControl), new PropertyMetadata(Guid.NewGuid()));
+
+        public static readonly DependencyProperty NameProperty = DependencyProperty.Register(
+            "Name", typeof(string), typeof(NodeControl), new PropertyMetadata(string.Empty));
 
         public Guid ID
         {
             get { return (Guid)GetValue(IDProperty); }
             set { SetValue(IDProperty, value); }
         }
-
-        public static readonly DependencyProperty NameProperty = DependencyProperty.Register(
-            "Name", typeof(string), typeof(NodeControl), new PropertyMetadata(string.Empty));
 
         public string Name
         {
@@ -32,6 +26,12 @@ namespace Gnode.UI.WPF
         }
 
         public ObservableCollection<PortControl> Ports { get; }
+
+        public NodeControl()
+        {
+            InitializeComponent();
+            Ports = new ObservableCollection<PortControl>();
+        }
 
         public void AddPort(PortControl port)
         {
@@ -42,5 +42,7 @@ namespace Gnode.UI.WPF
         {
             Ports.Remove(port);
         }
+
+        // Add more properties and methods for the NodeControl here
     }
 }
