@@ -7,6 +7,9 @@ namespace Gnode.UI.WPF
 {
     public partial class GraphControl : UserControl
     {
+        public ObservableCollection<NodeControl> Nodes { get; }
+        public ObservableCollection<ConnectionControl> Connections { get; }
+
         public GraphControl()
         {
             InitializeComponent();
@@ -14,27 +17,24 @@ namespace Gnode.UI.WPF
             Connections = new ObservableCollection<ConnectionControl>();
         }
 
-        public ObservableCollection<NodeControl> Nodes { get; }
-        public ObservableCollection<ConnectionControl> Connections { get; }
-
         public void AddNode(NodeControl node)
         {
             Nodes.Add(node);
             Canvas.SetLeft(node, 0);
             Canvas.SetTop(node, 0);
-            ((Canvas)Content).Children.Add(node);
+            canvas.Children.Add(node);
         }
 
-        public void RemoveNode(NodeControl node)
+        public void DeleteNode(NodeControl node)
         {
             Nodes.Remove(node);
-            ((Canvas)Content).Children.Remove(node);
+            canvas.Children.Remove(node);
         }
 
         public void AddConnection(ConnectionControl connection)
         {
             Connections.Add(connection);
-            ((Canvas)Content).Children.Add(connection);
+            canvas.Children.Add(connection);
         }
 
         public void RemoveConnection(ConnectionControl connection)

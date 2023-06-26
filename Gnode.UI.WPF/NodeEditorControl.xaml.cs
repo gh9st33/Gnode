@@ -114,10 +114,27 @@ namespace Gnode.UI.WPF
 
         private void DeleteNode_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedNode != null)
+            foreach (var node in selectedNodes.ToList())
             {
-                graphControl.RemoveNode(selectedNode);
-                selectedNode = null;
+                foreach (var port in node.Ports)
+                {
+                    var connections = graphControl.Connections.Where(c => c.SourcePort == port || c.TargetPort == port).ToList();
+                    foreach (var connection in connections)
+                    {
+                        graphControl.Connections.Remove(connection);
+                    }
+                }
+                graphControl.Nodes.Remove(node);
+            }
+            selectedNodes.Clear();
+        }
+
+        private void DeleteConnection_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedConnection != null)
+            {
+                graphControl.Connections.Remove(selectedConnection);
+                selectedConnection = null;
             }
         }
 
@@ -131,19 +148,6 @@ namespace Gnode.UI.WPF
                     // Set other properties of the connection here
                 };
                 graphControl.AddConnection(connection);
-                selectedPort = null;
-            }
-        }
-
-        private void DeleteConnection_Click(object sender, RoutedEventArgs e)
-        {
-            if (selectedPort != null)
-            {
-                var connection = graphControl.Connections.FirstOrDefault(c => c.SourcePort == selectedPort || c.TargetPort == selectedPort);
-                if (connection != null)
-                {
-                    graphControl.RemoveConnection(connection);
-                }
                 selectedPort = null;
             }
         }
