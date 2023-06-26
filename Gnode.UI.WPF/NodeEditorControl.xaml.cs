@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,10 +9,10 @@ namespace Gnode.UI.WPF
 {
     public partial class NodeEditorControl : UserControl
     {
+        private readonly List<NodeControl> selectedNodes = new List<NodeControl>();
         private NodeControl selectedNode;
         private PortControl selectedPort;
         private Point lastMousePosition;
-
         public NodeEditorControl()
         {
             InitializeComponent();
@@ -29,24 +30,44 @@ namespace Gnode.UI.WPF
             node.MouseLeftButtonUp += Node_MouseLeftButtonUp;
             graphControl.AddNode(node);
         }
-
+        
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            selectedNode = (NodeControl)sender;
+            var node = (NodeControl)sender;
+            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0)
+            {
+                if (selectedNodes.Contains(node))
+                {
+                    selectedNodes.Remove(node);
+                }
+                else
+                {
+                    selectedNodes.Add(node);
+                }
+            }
+            else
+            {
+                selectedNodes.Clear();
+                selectedNodes.Add(node);
+            }
             lastMousePosition = e.GetPosition(graphControl);
         }
 
         private void Node_MouseMove(object sender, MouseEventArgs e)
         {
-            if (selectedNode != null && e.LeftButton == MouseButtonState.Pressed)
+            if (selectedNodes.Count > 0 && e.LeftButton == MouseButtonState.Pressed)
             {
                 var currentPosition = e.GetPosition(graphControl);
                 var offset = currentPosition - lastMousePosition;
-                Canvas.SetLeft(selectedNode, Canvas.GetLeft(selectedNode) + offset.X);
-                Canvas.SetTop(selectedNode, Canvas.GetTop(selectedNode) + offset.Y);
+                foreach (var node in selectedNodes)
+                {
+                    Canvas.SetLeft(node, Canvas.GetLeft(node) + offset.X);
+                    Canvas.SetTop(node, Canvas.GetTop(node) + offset.Y);
+                }
                 lastMousePosition = currentPosition;
             }
         }
+
 
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
