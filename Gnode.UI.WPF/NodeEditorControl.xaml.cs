@@ -1,28 +1,67 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gnode.UI.WPF
 {
-    /// <summary>
-    /// Interaction logic for NodeEditorControl.xaml
-    /// </summary>
     public partial class NodeEditorControl : UserControl
     {
+        private NodeControl selectedNode;
+        private PortControl selectedPort;
+
         public NodeEditorControl()
         {
             InitializeComponent();
         }
+
+        private void CreateNode_Click(object sender, RoutedEventArgs e)
+        {
+            var node = new NodeControl
+            {
+                Name = "New Node",
+                // Set other properties of the node here
+            };
+            node.MouseLeftButtonDown += (s, e) => selectedNode = (NodeControl)s;
+            graphControl.AddNode(node);
+        }
+
+        private void DeleteNode_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedNode != null)
+            {
+                graphControl.RemoveNode(selectedNode);
+                selectedNode = null;
+            }
+        }
+
+        private void CreateConnection_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedPort != null)
+            {
+                var connection = new ConnectionControl
+                {
+                    SourcePort = selectedPort,
+                    // Set other properties of the connection here
+                };
+                graphControl.AddConnection(connection);
+                selectedPort = null;
+            }
+        }
+
+        private void DeleteConnection_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedPort != null)
+            {
+                var connection = graphControl.Connections.FirstOrDefault(c => c.SourcePort == selectedPort || c.TargetPort == selectedPort);
+                if (connection != null)
+                {
+                    graphControl.RemoveConnection(connection);
+                }
+                selectedPort = null;
+            }
+        }
+
+        // Add more properties and methods for the NodeEditorControl here
     }
 }
