@@ -49,6 +49,7 @@ namespace Gnode.UI.WPF
                 // Set other properties of the connection here
             };
             graphControl.AddConnection(selectedConnection);
+            UpdatePropertiesPanel();
         }
 
         private void Port_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -67,6 +68,7 @@ namespace Gnode.UI.WPF
                 selectedConnection = null;
             }
             selectedPort = null;
+            UpdatePropertiesPanel();
         }
 
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -89,6 +91,7 @@ namespace Gnode.UI.WPF
                 selectedNodes.Add(node);
             }
             lastMousePosition = e.GetPosition(graphControl);
+            UpdatePropertiesPanel();
         }
 
         private void Node_MouseMove(object sender, MouseEventArgs e)
@@ -110,6 +113,7 @@ namespace Gnode.UI.WPF
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             selectedNode = null;
+            UpdatePropertiesPanel();
         }
 
         private void DeleteNode_Click(object sender, RoutedEventArgs e)
@@ -149,6 +153,21 @@ namespace Gnode.UI.WPF
                 };
                 graphControl.AddConnection(connection);
                 selectedPort = null;
+            }
+        }
+        private void UpdatePropertiesPanel()
+        {
+            if (selectedNodes.Count == 1)
+            {
+                propertiesPanel.DataContext = selectedNodes.First();
+            }
+            else if (selectedConnection != null)
+            {
+                propertiesPanel.DataContext = selectedConnection;
+            }
+            else
+            {
+                propertiesPanel.DataContext = null;
             }
         }
 

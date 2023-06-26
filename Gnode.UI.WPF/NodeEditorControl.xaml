@@ -6,15 +6,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.ContextMenu>
-        <ContextMenu>
-            <MenuItem Header="Create Node" Click="CreateNode_Click" />
-            <MenuItem Header="Delete Node" Click="DeleteNode_Click" />
-            <MenuItem Header="Create Connection" Click="CreateConnection_Click" />
-            <MenuItem Header="Delete Connection" Click="DeleteConnection_Click" />
-        </ContextMenu>
-    </UserControl.ContextMenu>
-    <ScrollViewer>
-        <local:GraphControl x:Name="graphControl" />
-    </ScrollViewer>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <local:GraphControl x:Name="graphControl" Grid.Column="0"/>
+
+        <local:PropertiesPanel x:Name="propertiesPanel" Grid.Column="1" Width="200"/>
+    </Grid>
 </UserControl>
