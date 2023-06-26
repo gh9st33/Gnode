@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Gnode.UI.WPF
 {
@@ -12,6 +13,15 @@ namespace Gnode.UI.WPF
 
         public static readonly DependencyProperty NameProperty = DependencyProperty.Register(
             "Name", typeof(string), typeof(NodeControl), new PropertyMetadata(string.Empty));
+
+        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register("Selected", typeof(bool), 
+            typeof(NodeControl), new PropertyMetadata(false));
+
+        public bool Selected
+        {
+            get { return (bool)GetValue(SelectedProperty); }
+            set { SetValue(SelectedProperty, value); }
+        }
 
         public Guid ID
         {
@@ -42,7 +52,17 @@ namespace Gnode.UI.WPF
         {
             Ports.Remove(port);
         }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            Selected = true;
+        }
 
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseRightButtonDown(e);
+            Selected = false;
+        }
         // Add more properties and methods for the NodeControl here
     }
 }
