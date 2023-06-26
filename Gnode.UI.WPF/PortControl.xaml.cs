@@ -1,28 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gnode.UI.WPF
 {
-    /// <summary>
-    /// Interaction logic for PortControl.xaml
-    /// </summary>
     public partial class PortControl : UserControl
     {
         public PortControl()
         {
             InitializeComponent();
         }
+
+        public static readonly DependencyProperty IDProperty = DependencyProperty.Register(
+            "ID", typeof(Guid), typeof(PortControl), new PropertyMetadata(Guid.NewGuid()));
+
+        public Guid ID
+        {
+            get { return (Guid)GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
+
+        public static readonly DependencyProperty NameProperty = DependencyProperty.Register(
+            "Name", typeof(string), typeof(PortControl), new PropertyMetadata(string.Empty));
+
+        public string Name
+        {
+            get { return (string)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
+        }
+
+        // Add more properties and methods for the PortControl here
     }
 }
