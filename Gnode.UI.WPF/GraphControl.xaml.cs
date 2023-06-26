@@ -1,28 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gnode.UI.WPF
 {
-    /// <summary>
-    /// Interaction logic for GraphControl.xaml
-    /// </summary>
     public partial class GraphControl : UserControl
     {
         public GraphControl()
         {
             InitializeComponent();
+            Nodes = new ObservableCollection<NodeControl>();
+            Connections = new ObservableCollection<ConnectionControl>();
+        }
+
+        public ObservableCollection<NodeControl> Nodes { get; }
+        public ObservableCollection<ConnectionControl> Connections { get; }
+
+        public void AddNode(NodeControl node)
+        {
+            Nodes.Add(node);
+            Canvas.SetLeft(node, 0);
+            Canvas.SetTop(node, 0);
+            ((Canvas)Content).Children.Add(node);
+        }
+
+        public void RemoveNode(NodeControl node)
+        {
+            Nodes.Remove(node);
+            ((Canvas)Content).Children.Remove(node);
+        }
+
+        public void AddConnection(ConnectionControl connection)
+        {
+            Connections.Add(connection);
+            ((Canvas)Content).Children.Add(connection);
+        }
+
+        public void RemoveConnection(ConnectionControl connection)
+        {
+            Connections.Remove(connection);
+            ((Canvas)Content).Children.Remove(connection);
         }
     }
 }
