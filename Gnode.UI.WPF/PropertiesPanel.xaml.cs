@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Gnode.UI.WPF
 {
@@ -9,6 +11,30 @@ namespace Gnode.UI.WPF
             InitializeComponent();
         }
 
-        // Add properties and methods for the PropertiesPanel here
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+
+            if (e.Property == DataContextProperty)
+            {
+                UpdatePropertiesDataGrid();
+            }
+        }
+
+        private void UpdatePropertiesDataGrid()
+        {
+            if (DataContext is NodeControl node)
+            {
+                propertiesDataGrid.ItemsSource = new List<NodeControl> { node };
+            }
+            else if (DataContext is ConnectionControl connection)
+            {
+                propertiesDataGrid.ItemsSource = new List<ConnectionControl> { connection };
+            }
+            else
+            {
+                propertiesDataGrid.ItemsSource = null;
+            }
+        }
     }
-}
+

@@ -24,8 +24,10 @@ namespace Gnode.UI.WPF
         {
             var node = new NodeControl
             {
-                Name = "New Node",
-                // Set other properties of the node here
+                // Set properties of the node here based on the values in the PropertiesPanel
+                Name = PropertiesPanel.NodeName,
+                Position = PropertiesPanel.NodePosition,
+                // ... set other properties as needed
             };
             node.MouseLeftButtonDown += Node_MouseLeftButtonDown;
             node.MouseMove += Node_MouseMove;

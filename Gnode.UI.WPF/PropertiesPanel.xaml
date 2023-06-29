@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!-- Add controls for displaying and editing properties here -->
+        <DataGrid x:Name="propertiesDataGrid" AutoGenerateColumns="True" />
     </Grid>
 </UserControl>
